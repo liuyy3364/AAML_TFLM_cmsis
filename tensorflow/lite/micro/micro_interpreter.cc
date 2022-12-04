@@ -18,7 +18,7 @@ limitations under the License.
 #include <cstddef>
 #include <cstdint>
 
-#include "flatbuffers/flatbuffers.h"  // from @flatbuffers
+#include "flatbuffers/fbs_flatbuffers.h"  // from @flatbuffers
 #include "tensorflow/lite/c/c_api_types.h"
 #include "tensorflow/lite/c/common.h"
 #include "tensorflow/lite/core/api/error_reporter.h"

@@ -4,7 +4,7 @@
 #ifndef FLATBUFFERS_GENERATED_SCHEMA_TFLITE_H_
 #define FLATBUFFERS_GENERATED_SCHEMA_TFLITE_H_
 
-#include "flatbuffers/flatbuffers.h"
+#include "flatbuffers/fbs_flatbuffers.h"
 
 namespace tflite {
 

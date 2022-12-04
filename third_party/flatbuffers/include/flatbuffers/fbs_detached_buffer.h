@@ -17,9 +17,9 @@
 #ifndef FLATBUFFERS_DETACHED_BUFFER_H_
 #define FLATBUFFERS_DETACHED_BUFFER_H_
 
-#include "flatbuffers/allocator.h"
-#include "flatbuffers/base.h"
-#include "flatbuffers/default_allocator.h"
+#include "flatbuffers/fbs_allocator.h"
+#include "flatbuffers/fbs_base.h"
+#include "flatbuffers/fbs_default_allocator.h"
 
 namespace flatbuffers {
 

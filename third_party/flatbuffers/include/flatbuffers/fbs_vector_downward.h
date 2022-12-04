@@ -17,9 +17,9 @@
 #ifndef FLATBUFFERS_VECTOR_DOWNWARD_H_
 #define FLATBUFFERS_VECTOR_DOWNWARD_H_
 
-#include "flatbuffers/base.h"
-#include "flatbuffers/default_allocator.h"
-#include "flatbuffers/detached_buffer.h"
+#include "flatbuffers/fbs_base.h"
+#include "flatbuffers/fbs_default_allocator.h"
+#include "flatbuffers/fbs_detached_buffer.h"
 
 namespace flatbuffers {
 

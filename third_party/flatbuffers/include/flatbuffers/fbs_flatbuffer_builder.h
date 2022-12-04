@@ -19,19 +19,19 @@
 
 #include <functional>
 
-#include "flatbuffers/allocator.h"
-#include "flatbuffers/array.h"
-#include "flatbuffers/base.h"
-#include "flatbuffers/buffer_ref.h"
-#include "flatbuffers/default_allocator.h"
-#include "flatbuffers/detached_buffer.h"
-#include "flatbuffers/stl_emulation.h"
-#include "flatbuffers/string.h"
-#include "flatbuffers/struct.h"
-#include "flatbuffers/table.h"
-#include "flatbuffers/vector.h"
-#include "flatbuffers/vector_downward.h"
-#include "flatbuffers/verifier.h"
+#include "flatbuffers/fbs_allocator.h"
+#include "flatbuffers/fbs_array.h"
+#include "flatbuffers/fbs_base.h"
+#include "flatbuffers/fbs_buffer_ref.h"
+#include "flatbuffers/fbs_default_allocator.h"
+#include "flatbuffers/fbs_detached_buffer.h"
+#include "flatbuffers/fbs_stl_emulation.h"
+#include "flatbuffers/fbs_string.h"
+#include "flatbuffers/fbs_struct.h"
+#include "flatbuffers/fbs_table.h"
+#include "flatbuffers/fbs_vector.h"
+#include "flatbuffers/fbs_vector_downward.h"
+#include "flatbuffers/fbs_verifier.h"
 
 namespace flatbuffers {
 

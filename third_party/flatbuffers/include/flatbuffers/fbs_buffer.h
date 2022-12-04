@@ -17,7 +17,7 @@
 #ifndef FLATBUFFERS_BUFFER_H_
 #define FLATBUFFERS_BUFFER_H_
 
-#include "flatbuffers/base.h"
+#include "flatbuffers/fbs_base.h"
 
 namespace flatbuffers {
 
