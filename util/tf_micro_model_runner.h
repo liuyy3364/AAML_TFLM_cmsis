@@ -51,6 +51,16 @@ class MicroModelRunner {
     }
   }
 
+  void SetZeroInput() {
+    // Populate input tensor with an image with no person.
+    TfLiteTensor* input = interpreter_.input(0);
+    inputT* input_buffer = tflite::GetTensorData<inputT>(input);
+    int input_length = input->bytes / sizeof(inputT);
+    for (int i = 0; i < input_length; i++) {
+      input_buffer[i] = 128;
+    }
+  }
+
   outputT* GetOutput() {
     return tflite::GetTensorData<outputT>(interpreter_.output(0));
   }

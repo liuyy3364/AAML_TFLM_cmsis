@@ -16,7 +16,7 @@ limitations under the License.
 #ifndef V0_1_IC_IC_MODEL_DATA_H_
 #define V0_1_IC_IC_MODEL_DATA_H_
 
-extern const unsigned char pretrainedResnet_quant_tflite[];
-extern const unsigned int pretrainedResnet_quant_tflite_len;
+extern const unsigned char model[];
+extern const unsigned int model_len;
 
 #endif  // V0_1_IC_IC_MODEL_DATA_H_

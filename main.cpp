@@ -17,10 +17,16 @@ limitations under the License.
 
 int main(int argc, char *argv[]) {
   ee_benchmark_initialize();
-  while (1) {
-    int c;
-    c = th_getchar();
-    ee_serial_callback(c);
+  char cmd[] = "infer 1 0%";
+  int exec_cnt;
+  while(1){
+    printf("Input exec count: ");
+    scanf("%d", &exec_cnt);
+    while(exec_cnt--){
+      for(int i = 0; i < 10; i++) {
+        ee_serial_callback(cmd[i]);
+      }
+    }
   }
   return 0;
 }

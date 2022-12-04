@@ -33,39 +33,23 @@ in th_results is copied from the original in EEMBC.
 #include "util/quantization_helpers.h"
 #include "util/tf_micro_model_runner.h"
 #include "ic/ic_inputs.h"
-#include "ic/ic_model_quant_data.h"
+#include "ic/ic_model_data.h"
 #include "ic/ic_model_settings.h"
 
 UnbufferedSerial pc(USBTX, USBRX);
 DigitalOut timestampPin(D7);
 
-constexpr int kTensorArenaSize = 100 * 1024;
+constexpr int kTensorArenaSize = 200 * 1024;
 uint8_t tensor_arena[kTensorArenaSize];
 
-tflite::MicroModelRunner<int8_t, int8_t, 7> *runner;
+#define QUANT_MODEL false
+#define IO_TYPE float
+#define OP_NUM 7
+tflite::MicroModelRunner<IO_TYPE, IO_TYPE, OP_NUM> *runner;
 
 // Implement this method to prepare for inference and preprocess inputs.
 void th_load_tensor() {
-  uint8_t input_quantized[kIcInputSize];
-  int8_t input_asint[kIcInputSize];
-
-  size_t bytes = ee_get_buffer(reinterpret_cast<uint8_t *>(input_quantized),
-                               kIcInputSize * sizeof(uint8_t));
-  if (bytes / sizeof(uint8_t) != kIcInputSize) {
-    th_printf("Input db has %d elemented, expected %d\n", bytes / sizeof(uint8_t),
-              kIcInputSize);
-    return;
-  }
-  uint16_t i = 0;
-  for(i=0; i<kIcInputSize;i++)
-  {
-	  if(input_quantized[i]<=127)
-	    input_asint[i] = ((int8_t)input_quantized[i]) - 128;
-	  else
-	    input_asint[i] = (int8_t)(input_quantized[i] - 128);
-  }
- 
-  runner->SetInput(input_asint);
+  runner->SetZeroInput();
 }
 
 // Add to this method to return real inference results.
@@ -80,8 +64,12 @@ void th_results() {
 
   for (size_t i = 0; i < kCategoryCount; i++) {
     float converted =
+    #if QUANT_MODEL
         DequantizeInt8ToFloat(runner->GetOutput()[i], runner->output_scale(),
                               runner->output_zero_point());
+    #else
+        runner->GetOutput()[i];
+    #endif // IO_TYPE == int8_t
 
     th_printf("%0.3f", converted);
     if (i < (nresults - 1)) {
@@ -105,8 +93,8 @@ void th_final_initialize(void) {
   resolver.AddReshape();
   resolver.AddSoftmax();
   resolver.AddAveragePool2D();
-  static tflite::MicroModelRunner<int8_t, int8_t, 7> model_runner(
-      pretrainedResnet_quant_tflite, resolver, tensor_arena, kTensorArenaSize);
+  static tflite::MicroModelRunner<IO_TYPE, IO_TYPE, OP_NUM> model_runner(
+      model, resolver, tensor_arena, kTensorArenaSize);
   runner = &model_runner;
 }
 void th_pre() {}
