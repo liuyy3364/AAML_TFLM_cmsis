@@ -1,4 +1,4 @@
-/* Copyright 2019 The TensorFlow Authors. All Rights Reserved.
+/* Copyright 2020 The TensorFlow Authors. All Rights Reserved.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -13,15 +13,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ==============================================================================*/
 
-#include "main_functions.h"
+#ifndef V0_1_IC_IC_MODEL_DATA_H_
+#define V0_1_IC_IC_MODEL_DATA_H_
 
-// This is the default main used on systems that have the standard C entry
-// point. Other devices (for example FreeRTOS or ESP32) that have different
-// requirements for entry code (like an app_main function) should specialize
-// this main.cc file in a target-specific subfolder.
-int main(int argc, char* argv[]) {
-  setup();
-  while (true) {
-    loop();
-  }
-}
+extern const unsigned char pretrainedResnet_quant_tflite[];
+extern const unsigned int pretrainedResnet_quant_tflite_len;
+
+#endif  // V0_1_IC_IC_MODEL_DATA_H_
