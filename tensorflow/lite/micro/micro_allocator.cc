@@ -893,6 +893,20 @@ TfLiteStatus MicroAllocator::CommitStaticMemoryPlan(
 
 #ifdef TF_LITE_SHOW_MEMORY_USE
   memory_planner_->PrintMemoryPlan();
+  // AAML tinyML Lab
+  printf(
+      "Arena size: %d\n"
+      "Remaining arena size: %d\n"
+      "Totally arena Requirement: %d\n"
+      "\tContext Data size: %d\n"
+      "\tInference Memory(arena) Requirement: %d\n"
+      ,
+      ARENA_SIZE,
+      remaining_arena_size,
+      memory_planner_->GetMaximumMemorySize() + ARENA_SIZE - remaining_arena_size,
+      ARENA_SIZE - remaining_arena_size,
+      memory_planner_->GetMaximumMemorySize()
+  );
 #endif
   head_usage = memory_planner_->GetMaximumMemorySize();
 
