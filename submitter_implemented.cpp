@@ -43,8 +43,8 @@ DigitalOut timestampPin(D7);
 constexpr int kTensorArenaSize = ARENA_SIZE;
 uint8_t tensor_arena[kTensorArenaSize];
 
-#define QUANT_MODEL false
-#define IO_TYPE float
+#define QUANT_MODEL true
+#define IO_TYPE int8_t
 #define OP_NUM 7
 tflite::MicroModelRunner<IO_TYPE, IO_TYPE, OP_NUM> *runner;
 
@@ -64,18 +64,21 @@ void th_results() {
   int kCategoryCount = 10;
 
   for (size_t i = 0; i < kCategoryCount; i++) {
-    float converted =
+    // DequantizeInt8ToFloat(runner->GetOutput()[i], runner->output_scale(),
+    //                       runner->output_zero_point());
     #if QUANT_MODEL
-        DequantizeInt8ToFloat(runner->GetOutput()[i], runner->output_scale(),
-                              runner->output_zero_point());
+      int8_t result = runner->GetOutput()[i];
+      th_printf("%d", result);
+      if (i < (nresults - 1)) {
+        th_printf(",");
+      }
     #else
-        runner->GetOutput()[i];
-    #endif // IO_TYPE == int8_t
-
-    th_printf("%0.3f", converted);
-    if (i < (nresults - 1)) {
-      th_printf(",");
-    }
+      float converted = runner->GetOutput()[i];
+      th_printf("%0.3f", converted);
+      if (i < (nresults - 1)) {
+        th_printf(",");
+      }
+    #endif // QUANT_MODEL
   }
   th_printf("]\r\n");
 }
