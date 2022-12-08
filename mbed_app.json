@@ -2,7 +2,8 @@
     "requires": ["bare-metal"],
     "macros": [
         "TF_LITE_STATIC_MEMORY",
-        "TF_LITE_USE_CTIME"
+        "TF_LITE_USE_CTIME",
+        "CMSIS_NN"
     ],
     "target_overrides": {
         "*": {
