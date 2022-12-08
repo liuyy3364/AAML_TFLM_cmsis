@@ -56,8 +56,9 @@ class MicroModelRunner {
     TfLiteTensor* input = interpreter_.input(0);
     inputT* input_buffer = tflite::GetTensorData<inputT>(input);
     int input_length = input->bytes / sizeof(inputT);
+    int input_zp = this->input_zero_point();
     for (int i = 0; i < input_length; i++) {
-      input_buffer[i] = 128;
+      input_buffer[i] = input_zp;
     }
   }
 
