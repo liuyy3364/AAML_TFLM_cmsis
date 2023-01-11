@@ -18,15 +18,9 @@ limitations under the License.
 int main(int argc, char *argv[]) {
   ee_benchmark_initialize();
   char cmd[] = "infer 1 0%";
-  int exec_cnt;
-  while(1){
-    printf("Input exec count: ");
-    scanf("%d", &exec_cnt);
-    while(exec_cnt--){
-      for(int i = 0; i < 10; i++) {
-        ee_serial_callback(cmd[i]);
-      }
-    }
+  for(int i = 0; i < 10; i++) {
+    ee_serial_callback(cmd[i]);
   }
+  while(1){}
   return 0;
 }

@@ -153,7 +153,7 @@ void th_serialport_initialize(void) {
 #endif
 }
 
-void th_timestamp(void) {
+uint32_t th_timestamp(void) {
   # if EE_CFG_ENERGY_MODE==1
   timestampPin = 0;
   for (int i=0; i<100'000; ++i) {
@@ -167,6 +167,7 @@ void th_timestamp(void) {
   /* USER CODE 2 END */
   /* This message must NOT be changed. */
   th_printf(EE_MSG_TIMESTAMP, microSeconds);
+  return microSeconds;
   #endif
 }
 
