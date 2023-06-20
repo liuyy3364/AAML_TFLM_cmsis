@@ -46,7 +46,7 @@ uint8_t tensor_arena[kTensorArenaSize];
 #define QUANT_MODEL true
 #define IO_TYPE int8_t
 #define OP_NUM 7
-tflite::MicroModelRunner<IO_TYPE, IO_TYPE, OP_NUM> *runner;
+alignas(16) tflite::MicroModelRunner<IO_TYPE, IO_TYPE, OP_NUM> *runner;
 
 // Implement this method to prepare for inference and preprocess inputs.
 void th_load_tensor() {
