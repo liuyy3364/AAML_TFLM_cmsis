@@ -48,6 +48,7 @@ extern "C" {
 
 // AAML tinyML lab
 #define ARENA_SIZE 200*1024
+#define TF_LITE_SHOW_MEMORY_USE
 
 // The list of external context types known to TF Lite. This list exists solely
 // to avoid conflicts and to ensure ops can share the external contexts they
