@@ -47,7 +47,7 @@ extern "C" {
 #endif  // __cplusplus
 
 // AAML tinyML lab
-#define ARENA_SIZE 200*1024
+#define ARENA_SIZE 480*1024
 #define TF_LITE_SHOW_MEMORY_USE
 
 // The list of external context types known to TF Lite. This list exists solely

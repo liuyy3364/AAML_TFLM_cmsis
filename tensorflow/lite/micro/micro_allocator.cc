@@ -913,6 +913,7 @@ TfLiteStatus MicroAllocator::CommitStaticMemoryPlan(
           max_head_buffer_usage_, MicroArenaBufferAlignment()));
   
   // AAML tinyML Lab
+#ifdef TF_LITE_SHOW_MEMORY_USE
   printf(
       "Arena size: %d\n"
       "Remaining arena size: %d\n"
@@ -926,6 +927,7 @@ TfLiteStatus MicroAllocator::CommitStaticMemoryPlan(
       persistent_buffer_allocator_->GetPersistentUsedBytes(),
       non_persistent_buffer_allocator_->GetNonPersistentUsedBytes()
   );
+#endif
 
   return kTfLiteOk;
 }

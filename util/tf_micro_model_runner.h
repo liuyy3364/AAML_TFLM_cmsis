@@ -58,7 +58,10 @@ class MicroModelRunner {
     int input_length = input->bytes / sizeof(inputT);
     int input_zp = this->input_zero_point();
     for (int i = 0; i < input_length; i++) {
-      input_buffer[i] = input_zp;
+      // set quantized 0
+      // input_buffer[i] = input_zp;
+      // set 0
+      input_buffer[i] = 0;
     }
   }
 
