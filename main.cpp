@@ -15,12 +15,30 @@ limitations under the License.
 #include "api/internally_implemented.h"
 #include "api/submitter_implemented.h"
 
+#define EXEC_CNT 1
+
+extern char compile_time[];
+extern char model_name[];
+
+uint32_t tot_time = 0;
+uint32_t lat_min = UINT32_MAX;
+uint32_t lat_max = 0;
+
 int main(int argc, char *argv[]) {
   ee_benchmark_initialize();
+  
   char cmd[] = "infer 1 0%";
-  for(int i = 0; i < 10; i++) {
-    ee_serial_callback(cmd[i]);
+  for(int j = 0; j < EXEC_CNT; j++){
+    for(int i = 0; i < strlen(cmd); i++) {
+      ee_serial_callback(cmd[i]);
+    }
   }
+
+  printf("\r\nMin latency: %d\r\n", lat_min);
+  printf("Max latency: %d\r\n", lat_max);
+  printf("Average latency: %d\r\n", tot_time/EXEC_CNT);
+  printf("%s %s\n", compile_time, model_name);
+  
   while(1){}
   return 0;
 }

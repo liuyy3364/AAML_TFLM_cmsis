@@ -25,6 +25,11 @@ replaced by a fixed-size array.
 
 #include "api/submitter_implemented.h"
 
+// time recording vars
+extern uint32_t tot_time;
+extern uint32_t lat_min;
+extern uint32_t lat_max;
+
 // Command buffer (incoming commands from host)
 char volatile g_cmd_buf[EE_CMD_SIZE + 1];
 size_t volatile g_cmd_pos = 0u;
@@ -187,8 +192,12 @@ void ee_infer(size_t n, size_t n_warmup) {
   }
   th_post();
   uint32_t end = th_timestamp();
+  uint32_t elapsed_time = end - start;
   th_printf("m-infer-done\r\n");
-  th_printf("m-time-elapsed: %u us\r\n", end-start);
+  th_printf("m-time-elapsed: %u us\r\n", elapsed_time);
+  tot_time += elapsed_time;
+  if (elapsed_time < lat_min) lat_min = elapsed_time;
+  if (elapsed_time > lat_max) lat_max = elapsed_time;
   th_results();
 }
 

@@ -45,7 +45,7 @@ uint8_t tensor_arena[kTensorArenaSize];
 
 #define QUANT_MODEL true
 #define IO_TYPE int8_t
-#define OP_NUM 7
+#define OP_NUM 8
 alignas(16) tflite::MicroModelRunner<IO_TYPE, IO_TYPE, OP_NUM> *runner;
 
 // Implement this method to prepare for inference and preprocess inputs.
@@ -55,15 +55,14 @@ void th_load_tensor() {
 
 // Add to this method to return real inference results.
 void th_results() {
-  const int nresults = 10;
   /**
    * The results need to be printed back in exactly this format; if easier
    * to just modify this loop than copy to results[] above, do that.
    */
   th_printf("m-results-[");
-  int kCategoryCount = 10;
+  int nresults = runner->output_size();
 
-  for (size_t i = 0; i < kCategoryCount; i++) {
+  for (size_t i = 0; i < nresults; i++) {
     // DequantizeInt8ToFloat(runner->GetOutput()[i], runner->output_scale(),
     //                       runner->output_zero_point());
     #if QUANT_MODEL
@@ -88,7 +87,7 @@ void th_infer() { runner->Invoke(); }
 
 /// \brief optional API.
 void th_final_initialize(void) {
-  static tflite::MicroMutableOpResolver<7> resolver;
+  static tflite::MicroMutableOpResolver<OP_NUM> resolver;
 
   resolver.AddAdd();
   resolver.AddFullyConnected();
@@ -97,6 +96,7 @@ void th_final_initialize(void) {
   resolver.AddReshape();
   resolver.AddSoftmax();
   resolver.AddAveragePool2D();
+  resolver.AddPad();
   static tflite::MicroModelRunner<IO_TYPE, IO_TYPE, OP_NUM> model_runner(
       model, resolver, tensor_arena, kTensorArenaSize);
   runner = &model_runner;
